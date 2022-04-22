@@ -14,16 +14,20 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: dev
+      url: 'teste.dev.com'
     steps:
      - name: Run a one-line script
-       run: echo Hello, World! - ${{secrets.NEXT_PUBLIC_BASE_PATH}}
+       run: echo Hello, World! Deploy DEV --> ${{secrets.NEXT_PUBLIC_BASE_PATH}}
        
   deploy-hmg:
     runs-on: ubuntu-latest
+    environment:
+      name: hmg
+      url: 'teste.hmg.com'
     needs: deploy-dev
     steps:
      - name: Run a one-line script
-       run: echo Hello, World! - ${{secrets.NEXT_PUBLIC_BASE_PATH}}
+       run: echo Hello, World! Deploy HMG --> ${{secrets.NEXT_PUBLIC_BASE_PATH}}
    
   build:
 
@@ -43,13 +47,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: |
-          if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
-    - run: npm run build --if-present
-    - run: npm test
+    - run: yarn
+    - run: yarn build
