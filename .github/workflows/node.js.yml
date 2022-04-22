@@ -17,7 +17,7 @@ jobs:
       url: 'teste.dev.com'
     steps:
      - name: Run a one-line script
-       run: echo Hello, World! Deploy DEV --> ${{secrets.NEXT_PUBLIC_BASE_PATH}}
+       run: echo Hello, World! Deploy DEV ${{secrets.NEXT_PUBLIC_BASE_PATH}}
        
   deploy-hmg:
     runs-on: ubuntu-latest
@@ -27,11 +27,15 @@ jobs:
     needs: deploy-dev
     steps:
      - name: Run a one-line script
-       run: echo Hello, World! Deploy HMG --> ${{secrets.NEXT_PUBLIC_BASE_PATH}}
+       run: echo Hello, World! Deploy HMG ${{secrets.NEXT_PUBLIC_BASE_PATH}}
    
   build:
 
     runs-on: ubuntu-latest
+    
+    environment:
+      name: prd
+      url: 'teste.prd.com'
     
     needs: deploy-hmg
     
